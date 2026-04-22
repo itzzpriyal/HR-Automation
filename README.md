@@ -1,4 +1,4 @@
-# Visual HR Workflow Automation Engine
+# FlowForge HR — Visual HR Workflow Automation Engine
 
 FlowForge HR is a production-grade, no-code workflow builder for designing, validating, and simulating HR processes such as onboarding, leave approvals, and document verification.
 
@@ -6,7 +6,88 @@ It provides a powerful visual interface where users can construct workflow graph
 
 ---
 
-##  Demo Overview
+## Architecture
+
+The system follows a modular, frontend-centric architecture:
+
+* **Presentation Layer**
+  Built with React + TypeScript + TailwindCSS for a responsive UI.
+
+* **Workflow Engine (Core Logic)**
+  Uses React Flow to represent workflows as directed graphs (nodes + edges).
+
+* **State Management Layer**
+  Zustand manages global state with undo/redo support and minimal re-renders.
+
+* **Validation Engine**
+  Custom logic ensures workflow correctness (cycle detection, node constraints, reachability).
+
+* **Simulation Engine**
+  Executes workflows step-by-step using a mocked backend (MSW).
+
+---
+
+## How to Run
+
+### Clone the repository
+
+```bash id="6j2srm"
+git clone https://github.com/your-username/HR-Automation.git
+cd HR-Automation
+```
+
+### Install dependencies
+
+```bash id="y2fj34"
+npm install
+```
+
+### Start development server
+
+```bash id="8rkx1n"
+npm run dev
+```
+
+### Open in browser
+
+```id="knn9yd"
+http://localhost:5173
+```
+
+---
+
+## Design Decisions
+
+* React Flow chosen for efficient graph-based workflow visualization
+* Zustand over Context API for better performance and scalability
+* React Hook Form + Zod for type-safe, scalable form handling
+* MSW (Mock Service Worker) to simulate backend APIs without needing a real server
+* Modular architecture to support easy extension (new node types, rules, APIs)
+
+---
+
+## What Was Completed
+
+* Visual drag-and-drop workflow builder
+* Multiple node types (Start, Task, Approval, Automation, End)
+* Dynamic node configuration panel
+* Workflow validation system (cycle detection, structural rules)
+* Simulation engine with execution timeline and logs
+* Import/Export workflows as JSON
+
+---
+
+## What Could Be Added (Future Work)
+
+* Backend integration for real workflow execution
+* User authentication and role-based access
+* Persistent storage (database integration)
+* Real-time collaboration (multi-user editing)
+* Advanced analytics dashboard for workflow insights
+
+---
+
+## Demo Overview
 
 * Drag nodes → Connect workflows → Configure logic → Validate → Simulate execution
 * Fully client-side (no backend required)
@@ -14,7 +95,7 @@ It provides a powerful visual interface where users can construct workflow graph
 
 ---
 
-##  Features
+## Features
 
 ### Visual Workflow Builder
 
@@ -22,7 +103,7 @@ It provides a powerful visual interface where users can construct workflow graph
 * Interactive edges with animated transitions
 * Mini-map, zoom controls, and node selection
 
-###  Rich Node System
+### Node System
 
 * Start Node
 * Task Node
@@ -30,190 +111,77 @@ It provides a powerful visual interface where users can construct workflow graph
 * Automated Step Node (API-driven actions)
 * End Node
 
-Each node supports dynamic configuration via forms.
-
----
-
-###  Dynamic Configuration Panel
+### Dynamic Configuration Panel
 
 * Built with React Hook Form + Zod
 * Real-time updates (no save button needed)
-* Supports dynamic fields (e.g., automation parameters)
 
----
-
-###  Workflow Validation Engine
-
-Ensures structural correctness:
+### Workflow Validation Engine
 
 * Exactly one Start node
 * At least one End node
-* No cycles (DFS-based detection)
-* All nodes reachable from Start
+* No cycles
+* All nodes reachable
 * Approval nodes must have both branches
-* Node-level validation errors
 
----
+### Simulation Sandbox
 
-###  Simulation Sandbox
-
-* Execute workflows with mock API
 * Step-by-step execution timeline
-* Status tracking: success / error / skipped
-* Execution logs with timestamps and durations
-* Validation check before simulation
+* Status tracking and logs
 
----
+### Mock API Layer (MSW)
 
-###  Mock API Layer (MSW)
-
-* Simulates backend endpoints:
-
-  * `GET /automations`
-  * `POST /simulate`
+* Simulated backend APIs
 * No external server required
-* Realistic execution behavior
+
+### State Management
+
+* Zustand with undo/redo support
+
+### Import / Export
+
+* JSON-based workflow sharing
 
 ---
 
-###  State Management
+## Tech Stack
 
-* Zustand for global state
-* Undo / Redo support using middleware
-* Efficient updates without unnecessary re-renders
-
----
-
-###  Import / Export
-
-* Export workflows as JSON
-* Import workflows from JSON files
-* Useful for sharing and persistence
+React 18 + Vite + TypeScript
+React Flow (@xyflow/react)
+TailwindCSS
+Zustand
+React Hook Form + Zod
+MSW
+date-fns, Lucide Icons
 
 ---
 
-##  Tech Stack
+## Project Structure
 
-| Category           | Technology                   |
-| ------------------ | ---------------------------- |
-| Frontend           | React 18 + Vite + TypeScript |
-| Graph Engine       | React Flow (@xyflow/react)   |
-| Styling            | TailwindCSS                  |
-| State Management   | Zustand                      |
-| Forms & Validation | React Hook Form + Zod        |
-| API Mocking        | MSW (Mock Service Worker)    |
-| Utilities          | date-fns, Lucide Icons       |
-
----
-
-##  Project Structure
-
-```
+```id="5xtp02"
 src/
-├── api/                # Mock APIs and services
-├── components/         # UI components (canvas, nodes, forms)
-├── hooks/              # Custom hooks (state, validation, simulation)
-├── store/              # Zustand store
-├── types/              # TypeScript interfaces
-├── utils/              # Graph + workflow utilities
+├── api/
+├── components/
+├── hooks/
+├── store/
+├── types/
+├── utils/
 └── App.tsx
 ```
 
 ---
 
-##  Architecture Overview
+## Known Limitations
 
-### 🔹 Why Zustand over Context?
-
-* Better performance (avoids unnecessary re-renders)
-* Simpler global state management
-* Middleware support (undo/redo)
-
-### 🔹 Why MSW over json-server?
-
-* No separate backend process required
-* Intercepts network requests directly
-* Ideal for frontend-only simulation
-
-### 🔹 Why React Hook Form?
-
-* High performance (uncontrolled inputs)
-* Minimal re-renders
-* Easy integration with Zod
-
-### 🔹 Why Zod?
-
-* Single source of truth for validation
-* Strong TypeScript integration
-* Declarative schemas
+* No persistent storage
+* Simulation is mocked
+* Single-user environment
 
 ---
 
-##  Getting Started
+## License
 
-### 1️⃣ Install dependencies
+MIT License
+## Author
 
-```bash
-npm install
-```
-
-### 2️⃣ Run development server
-
-```bash
-npm run dev
-```
-
-### 3️⃣ Open in browser
-
-```
-http://localhost:5173
-```
-
----
-
-##  Sample Workflow
-
-**Employee Onboarding Flow:**
-
-Start
-→ Collect Documents
-→ Background Check
-→ Manager Approval
-
-* ✅ Approved → Send Welcome Email → End
-* ❌ Rejected → Notify HR → End
-
----
-
-##  Key Highlights
-
-* Fully no-code workflow builder
-* Real-time validation + simulation
-* Strong type safety (TypeScript strict mode)
-* Modular and scalable architecture
-* Clean UI with dark theme
-
----
-
-##  Future Enhancements
-
-* Backend integration (real execution engine)
-* Authentication & user roles
-* Workflow persistence (database)
-* Real-time collaboration
-* Analytics dashboard (execution insights)
-
----
-
-##  Known Limitations
-
-* No persistent storage (data resets on refresh)
-* Simulation is mocked (not real execution)
-* Single-user environment (no collaboration)
-
-## 👨‍💻 Author
-
-**Priyal Gupta**
-* Interested in ML, backend systems, and automation tools
-
----
+Priyal Gupta

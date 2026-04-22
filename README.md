@@ -1,4 +1,4 @@
-#  FlowForge HR — Visual HR Workflow Automation Engine
+# Visual HR Workflow Automation Engine
 
 FlowForge HR is a production-grade, no-code workflow builder for designing, validating, and simulating HR processes such as onboarding, leave approvals, and document verification.
 

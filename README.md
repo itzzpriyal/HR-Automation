@@ -214,6 +214,6 @@ Start
 ## 👨‍💻 Author
 
 **Priyal Gupta**
-Interested in ML, backend systems, and automation tools
+* Interested in ML, backend systems, and automation tools
 
 ---
